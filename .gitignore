@@ -102,3 +102,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+
+# Lynker Analytics
+examples/models/
+examples/logs/
+examples/saved_models/
