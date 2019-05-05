@@ -3,7 +3,7 @@
 This repository contains the presentation from the May 2019 Wellington Data Science and Machine Learning Meetup. https://www.meetup.com/machine-learning-data-science-WLG/
 and the scripts used to gather data for and demonstrate the concepts in the presentation.
 
-#presentations
+# presentations
 
 in the presentations folder you'll find two versions of the slide show.
 "Meetup_ActiveLearning_May2019.pptx" is the warts and all power point as presented at the May 2019 meetup.
@@ -23,7 +23,7 @@ Also used: scikit-learn and pandas
 
 Also, for the web page, I used sql server developer edition (for linux) as the database backend and php 7 for the front end with and the odbc driver {ODBC Driver 17 for SQL Server} to talk between the two.
 
-#Scripts looking at CIFAR 10
+# Scripts looking at CIFAR 10
 ##  Samples Sizes
 the following will produce csv output that shows the test and validation accuracacy when training a resnet20 model on a subset of the cifar10 training data
 this script is used to demonstrate the effect of training set size on model accuracy against the test set.
