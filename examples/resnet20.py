@@ -1,7 +1,5 @@
 #This code copied from cifar10_resnet.py in the keras/examples retrieved on 25th April 2019
 
-
-
 import keras
 from keras.layers import Dense, Conv2D, BatchNormalization, Activation
 from keras.layers import AveragePooling2D, Input, Flatten
@@ -135,9 +133,12 @@ def resnet_v1(input_shape, depth, num_classes=10):
     return model
 
 
-def getmodel():
+def getmodel(num_classes=10):
+	#why this following line is necessary I have no idea but without it, successful calls to this produces increasingly slow to train models.
+	#see here: https://forums.fast.ai/t/how-could-i-release-gpu-memory-of-keras/2023/9
+	K.clear_session()
 	n = 3
 	depth = n * 6 + 2
 	input_shape=(32,32,3)
-	return resnet_v1(input_shape=input_shape, depth=depth)
+	return resnet_v1(input_shape=input_shape, depth=depth, num_classes=num_classes)
 

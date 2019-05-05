@@ -37,19 +37,10 @@ X_test=X_test.astype(np.float32)/255.
 assert m_samples == m_samples2
 assert num_classes == o_features
 
-def res(x,h):
-	c=int(h/4)
-	y=Conv2D(filters=c, kernel_size=(3,3), activation='relu', strides=(1,1), padding='same')(x)
-	y=BN()(y)
-	y=Conv2D(filters=h, kernel_size=(3,3), activation='relu', strides=(1,1), padding='same')(y)
-	y=BN()(y)
-	return Add()([x,y])
-	
 max_validation_samples=1000
 min_training_samples=100
 max_training_samples=m_samples-max_validation_samples
 growth_factor=1.3
-
 
 datagen = ImageDataGenerator(
 	rotation_range=10,
@@ -62,47 +53,13 @@ datagen = ImageDataGenerator(
 
 t=min_training_samples
 #t=45000
+#t=11124
 loopcount=0
 while t < max_training_samples:
 	X_train,X_valid, y_train,y_valid = train_test_split(X,y,test_size=int(m_samples - t), random_state=loopcount)
 
 	X_valid=X_valid[:1000]
 	y_valid=y_valid[:1000]
-
-	"""
-	#-----------------------------------------------------------------
-	#	Input and Stem
-	#-----------------------------------------------------------------
-	input_1 = Input(shape=(height,width,channels))								#32
-
-	i = BN()(input_1)
-
-	i = SpatialDropout2D(0.2)(i)
-	
-	x = Conv2D(filters=13, kernel_size=(3,3), padding='same', activation='relu', strides=(2,2))(i)	#16
-	m = MaxPooling2D(pool_size=(2,2))(i)
-	x = Concatenate()([x,m])
-	x = BN()(x)
-	x = SpatialDropout2D(0.2)(x)
-	x = Conv2D(filters=32, kernel_size=(3,3), padding='same', activation='relu', strides=(2,2))(x)	#8
-	x = BN()(x)
-	x = res(x,32)
-	x = res(x,32)
-	x = res(x,32)
-	x = Conv2D(filters=64, kernel_size=(3,3), padding='same', activation='relu', strides=(2,2))(x)	#4
-	x = BN()(x)
-	x = res(x,64)
-	x = res(x,64)
-	x = res(x,64)
-	x = GlobalAveragePooling2D()(x)
-	x = BN()(x)
-	
-	x = Dropout(0.3)(x)
-	
-	output_1 = Dense(num_classes, activation='softmax')(x)
-	
-	model = Model(inputs=input_1, outputs=output_1)
-	"""
 
 	for data_aug in [False,True]:
 	
@@ -153,7 +110,7 @@ while t < max_training_samples:
 	
 		p=model.predict(X_test)
 	
-		print ( 'train samples,', t, ',test accuracy,', acc(np.argmax(y_test,axis=-1),np.argmax(p,axis=-1)), ',validation accuracy,', validation_score, ',best epoch,', best_epoch, ',data aug,', data_aug, flush=True )
+		print ( 'LOG, train samples,', t, ',test accuracy,', acc(np.argmax(y_test,axis=-1),np.argmax(p,axis=-1)), ',validation accuracy,', validation_score, ',best epoch,', best_epoch, ',data aug,', data_aug, flush=True )
 
 	t=int(t*growth_factor)
 	loopcount+=1
