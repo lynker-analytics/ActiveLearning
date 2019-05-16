@@ -4,6 +4,7 @@ create table boris_classify
 	,[class] varchar(1000)
 	,createdon datetime
 	,createdby varchar(1000) default SYSTEM_USER
+	,confidence float
 )
 go
 
